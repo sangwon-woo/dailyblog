@@ -4,8 +4,6 @@ title: About Me
 permalink: /about/
 ---
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
-
-
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+Hi! My name is Sangwon Woo.
+I"m a software developer and system trader.
+Currently, I'm working with my friend. 
