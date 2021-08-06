@@ -1,7 +1,7 @@
 ---
 layout: default
 permalink: /gitInfo/
-title: gitInfo
+title: Github 
 search_exclude: true
 ---
 <img src="https://ghchart.rshah.org/sangwon-woo" alt="" style="width: 660px; height: 100px;">
@@ -29,7 +29,7 @@ const initRepo = async () =>{
             h2Element.textContent = repos.name
 
             let pElementDesc = document.createElement("p")
-            pElementDesc.textContent = "레포설명 : " + repos.description
+            pElementDesc.textContent = "Repository Explanation : " + repos.description
 
             let aElementURL = document.createElement("a")
             aElementURL.href = repos.svn_url
