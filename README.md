@@ -1,8 +1,5 @@
 [//]: # (This template replaces README.md when someone creates a new repo with the fastpages template.)
-
-![](https://github.com/sangwon-woo/dailyblog/workflows/CI/badge.svg) 
-![](https://github.com/sangwon-woo/dailyblog/workflows/GH-Pages%20Status/badge.svg) 
-https://sangwon-woo.github.io/dailyblog/
+## URL : https://sangwon-woo.github.io/dailyblog/
 
 # 그냥 이것 저것 적어보는 곳
 
