@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      3 min read
     
 </span></p>
 
@@ -214,6 +214,23 @@ PyQt에서 윈도우를 생성하기 위한 클래스로 QMainWindow나 QDialog 
 <span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'~/~.db'</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">'SELECT * FROM kakao'</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="c1"># 또는 index_col = 'index'
 </span></code></pre></div></div>
+
+<h3 id="pycharm의-디버깅-기능">PyCharm의 디버깅 기능</h3>
+<ul>
+  <li>
+    <p>Step Over(F8) : 코드의 현재 라인에서 그 다음 라인으로 이동한다. 하이라이트 표시된 라인이 메서드를 호출하고 있어도 다음 줄로 넘어간다. 호출된 메서드는 내부적으로 실행된다.<br />
+다만 내부적으로 실행되는 메서드라도 해당 메서드에 breakpoints가 존재할 경우 디버거는 해당 위치에서 정지한다. 이 때 강제로 스킵하고 싶으면 Force Step Over를 사용하면 된다.</p>
+  </li>
+  <li>
+    <p>Step Into(F7) : 메서드 내에서 무슨 일이 일어나고 있는지 보여준다. 호출한 메서드가 올바른 결과를 반환하고 있는지 확신할 수 없을 때에 이 기능을 사용해서 메서드 내부를 관찰할 수 있다.</p>
+  </li>
+  <li>
+    <p>Step Into My Code(Alt + Shift + F7) : 나의 코드에 집중하고 싶을 때, 라이브러리 클래스로는 stepping 하지 않고 Step Into를 수행하는 기능이다.</p>
+  </li>
+  <li>
+    <p>Step Out(Shift + F8) : 메서드를 호출하던 바깥 코드로 빠져나온다.</p>
+  </li>
+</ul>
 
 
   </div><a class="u-url" href="/dailyblog/markdown/programming/cookbook/tip/software/2021/08/25/post011.html" hidden></a>
