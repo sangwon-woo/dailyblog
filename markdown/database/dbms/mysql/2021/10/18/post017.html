@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>이것이 MySQL이다 | Sangwon’s Daily Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="이것이 MySQL이다" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="우재남 지음" />
+<meta property="og:description" content="우재남 지음" />
+<link rel="canonical" href="https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/2021/10/18/post017.html" />
+<meta property="og:url" content="https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/2021/10/18/post017.html" />
+<meta property="og:site_name" content="Sangwon’s Daily Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-18T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/2021/10/18/post017.html","@type":"BlogPosting","headline":"이것이 MySQL이다","dateModified":"2021-10-18T00:00:00-05:00","datePublished":"2021-10-18T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/2021/10/18/post017.html"},"description":"우재남 지음","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/dailyblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sangwon-woo.github.io/dailyblog/feed.xml" title="Sangwon's Daily Blog" /><link rel="shortcut icon" type="image/x-icon" href="/dailyblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/dailyblog/">Sangwon&#39;s Daily Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/dailyblog/about/">About Me</a><a class="page-link" href="/dailyblog/gitInfo/">Github</a><a class="page-link" href="/dailyblog/search/">Search</a><a class="page-link" href="/dailyblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">이것이 MySQL이다</h1><p class="page-description">우재남 지음</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-18T00:00:00-05:00" itemprop="datePublished">
+        Oct 18, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#markdown">markdown</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#database">database</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#dbms">dbms</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#mysql">mysql</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#chapter-01-dbms-개요와-mysql-소개">Chapter 01 DBMS 개요와 MySQL 소개</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#11-dbms-개요">1.1 DBMS 개요</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#111-데이터베이스의-정의와-특징">1.1.1 데이터베이스의 정의와 특징</a></li>
+<li class="toc-entry toc-h3"><a href="#112-데이터베이스의-발전">1.1.2 데이터베이스의 발전</a></li>
+<li class="toc-entry toc-h3"><a href="#113-dbms의-분류">1.1.3 DBMS의 분류</a></li>
+<li class="toc-entry toc-h3"><a href="#114-sql-개요">1.1.4 SQL 개요</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#12-mysql-소개">1.2 MySQL 소개</a></li>
+<li class="toc-entry toc-h2"><a href="#13-mysql의-에디션-및-기능-비교">1.3 MySQL의 에디션 및 기능 비교</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#chapter02-mysql-설치">Chapter02 MySQL 설치</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#21-mysql-설치-전-준비사항">2.1 MySQL 설치 전 준비사항</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#211-소프트웨어-요구사항">2.1.1 소프트웨어 요구사항</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h1 id="chapter-01-dbms-개요와-mysql-소개">
+<a class="anchor" href="#chapter-01-dbms-%EA%B0%9C%EC%9A%94%EC%99%80-mysql-%EC%86%8C%EA%B0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter 01 DBMS 개요와 MySQL 소개</h1>
+<h2 id="11-dbms-개요">
+<a class="anchor" href="#11-dbms-%EA%B0%9C%EC%9A%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1 DBMS 개요</h2>
+<h3 id="111-데이터베이스의-정의와-특징">
+<a class="anchor" href="#111-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%9D%98-%EC%A0%95%EC%9D%98%EC%99%80-%ED%8A%B9%EC%A7%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1.1 데이터베이스의 정의와 특징</h3>
+<ul>
+  <li>데이터베이스는 여러 명의 사용자나 응용 프로그램이 공유하고 동시에 접근이 가능해야 한다.</li>
+  <li>유명한 DBMS로는 MySQL, MariaDB, Oracle, SQL Server가 있다.</li>
+  <li>DBMS의 특징이 있다.
+    <ol>
+      <li>데이터의 무결성
+        <ul>
+          <li>데이터베이스 안의 데이터는 어떤 경로를 통해 들어왔던지 데이터에 오류가 있으면 안된다.</li>
+        </ul>
+      </li>
+      <li>데이터의 독립성
+        <ul>
+          <li>데이터베이스의 크기를 변경하거나 데이터 파일으 ㅣ저장소를 변경하더라도 기존에 작성된 응용 프로그램은 전혀 영향을 받지 않아야 한다.</li>
+        </ul>
+      </li>
+      <li>보안</li>
+      <li>데이터 중복의 최소화</li>
+      <li>응용 프로그램 제작 및 수정이 쉬워짐</li>
+      <li>데이터의 안전성 향상
+        <ul>
+          <li>DBMS가 제공하는 백업, 복원 기능을 이용할 수 있다.</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="112-데이터베이스의-발전">
+<a class="anchor" href="#112-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%9D%98-%EB%B0%9C%EC%A0%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1.2 데이터베이스의 발전</h3>
+<ul>
+  <li>오프라인으로 관리</li>
+  <li>파일시스템의 사용
+    <ul>
+      <li>파일이 커지면 한계가 명확해진다.</li>
+    </ul>
+  </li>
+  <li>DBMS(DataBase Management System)
+    <ul>
+      <li>‘데이터베이스’를 잘 관리하고 운영하기 위한 시스템 또는 소프트웨어를 의미.</li>
+      <li>SQL(Structured Query Language)의 등장</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="113-dbms의-분류">
+<a class="anchor" href="#113-dbms%EC%9D%98-%EB%B6%84%EB%A5%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1.3 DBMS의 분류</h3>
+<ul>
+  <li>크게 4~5가지로 분류. 핵심은 RDBMS.</li>
+  <li>계층형 DBMS. 트리구조로 되어 있음.</li>
+  <li>망형 DBMS. 수평으로도 연결되어 있음. 현재 사용하지 않음.</li>
+  <li>관계형 DBMS(RDBMS). 시초는 1969년. 최소 단위는 테이블임. 엑셀 sheet가 테이블. 관계형 DBMS의 핵심 구조.
+    <ul>
+      <li>열 = 컬럼, 행 = 로우</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="114-sql-개요">
+<a class="anchor" href="#114-sql-%EA%B0%9C%EC%9A%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1.4 SQL 개요</h3>
+<p>RDBMS를 유지하기 위한 언어. 하지만 DBMS 제작 회사와 독립적임. 표준 SQL이 있음. 오라클은 표준 SQL을 지키면서 PL/SQL을 만듦.</p>
+<ul>
+  <li>다른 시스템으로 이식성이 좋다.</li>
+  <li>표준이 계속 발전한다.</li>
+  <li>대화식 언어다.</li>
+  <li>분산형 클라이언트/서버 구조를 지원한다.</li>
+</ul>
+
+<h2 id="12-mysql-소개">
+<a class="anchor" href="#12-mysql-%EC%86%8C%EA%B0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2 MySQL 소개</h2>
+<p>Oracle에서 제작함. 개정판에서는 MySQL 8.0 버전을 사용함.</p>
+
+<h2 id="13-mysql의-에디션-및-기능-비교">
+<a class="anchor" href="#13-mysql%EC%9D%98-%EC%97%90%EB%94%94%EC%85%98-%EB%B0%8F-%EA%B8%B0%EB%8A%A5-%EB%B9%84%EA%B5%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3 MySQL의 에디션 및 기능 비교</h2>
+<p>회사에서 사용할 거면 사용 에디션을 사용하면 된다. 우리가 아는 커뮤니티 버전은 엔터프라이즈 정도 기능을 갖고 있다.</p>
+
+<h1 id="chapter02-mysql-설치">
+<a class="anchor" href="#chapter02-mysql-%EC%84%A4%EC%B9%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter02 MySQL 설치</h1>
+<h2 id="21-mysql-설치-전-준비사항">
+<a class="anchor" href="#21-mysql-%EC%84%A4%EC%B9%98-%EC%A0%84-%EC%A4%80%EB%B9%84%EC%82%AC%ED%95%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1 MySQL 설치 전 준비사항</h2>
+<h3 id="211-소프트웨어-요구사항">
+<a class="anchor" href="#211-%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1.1 소프트웨어 요구사항</h3>
+<ul>
+  <li>64비트 윈도우즈. 윈도우즈 10. <br>
+우리는 MySQL Server, MySQL Client, MySQL Workbench, Samples and Examples를 설치할 것. <br>
+root는 MySQL의 관리자.</li>
+  <li>클라이언트 프로그램으로 MySQL Workbench가 있다. 웹 브라우저랑 비슷한 개념. 웹 서버에 접속하기 위해 브라우저를 이용하는 것처럼 데이터베이스에 접속하기 위해 워크벤치를 쓰는 것.</li>
+  <li>Edit &gt; Preferences &gt; SQL Editor에서 마지막을 체크 푼다.</li>
+  <li>C:\Program Files\MySQL\MySQL Server 8.0\bin 복사.</li>
+  <li>Powershell을 관리자 권한으로 열고 cmd 명령어 입력</li>
+  <li>SETX PATH “C:\Program Files\MySQL\MySQL Server 8.0\bin;%PATH%”</li>
+</ul>
+
+
+  </div><a class="u-url" href="/dailyblog/markdown/database/dbms/mysql/2021/10/18/post017.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/dailyblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/dailyblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/dailyblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Simple TIL trace</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/sangwon-woo" title="sangwon-woo"><svg class="svg-icon grey"><use xlink:href="/dailyblog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
