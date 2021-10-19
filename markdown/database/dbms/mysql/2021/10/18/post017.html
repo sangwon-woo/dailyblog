@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -138,6 +138,25 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#21-mysql-설치-전-준비사항">2.1 MySQL 설치 전 준비사항</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#211-소프트웨어-요구사항">2.1.1 소프트웨어 요구사항</a></li>
+<li class="toc-entry toc-h3"><a href="#23-샘플-데이터베이스-설치">2.3 샘플 데이터베이스 설치</a></li>
+<li class="toc-entry toc-h3"><a href="#24-설치-후-확인해야-할-사항">2.4 설치 후 확인해야 할 사항</a></li>
+<li class="toc-entry toc-h3"><a href="#25-mysql-제거">2.5 MySQL 제거</a></li>
+<li class="toc-entry toc-h3"><a href="#26-linux에-mysql을-설치하기">2.6 Linux에 MySQL을 설치하기</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#chapter-03-mysql-전체-운영-실습">Chapter 03 MySQL 전체 운영 실습</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#31-요구사항-분석과-시스템-설계-그리고-모델링">3.1 요구사항 분석과 시스템 설계 그리고 모델링</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#311-정보시스템-구축-절차-요약">3.1.1 정보시스템 구축 절차 요약</a></li>
+<li class="toc-entry toc-h3"><a href="#312-데이터베이스-모델링과-필수-용어">3.1.2 데이터베이스 모델링과 필수 용어</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#32-데이터베이스-구축">3.2 데이터베이스 구축</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#321-데이터베이스-생성">3.2.1 데이터베이스 생성</a></li>
 </ul>
 </li>
 </ul>
@@ -240,6 +259,47 @@ root는 MySQL의 관리자.</li>
   <li>SETX PATH “C:\Program Files\MySQL\MySQL Server 8.0\bin;%PATH%”</li>
 </ul>
 
+<h3 id="23-샘플-데이터베이스-설치">
+<a class="anchor" href="#23-%EC%83%98%ED%94%8C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%A4%EC%B9%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3 샘플 데이터베이스 설치</h3>
+<ul>
+  <li>cmd 창에서 mysql -u root -p : root user로 password를 입력해서 접속하겠다라는 의미.</li>
+  <li>source employees.sql; : employees.sql 파일을 실행한다.</li>
+</ul>
+
+<h3 id="24-설치-후-확인해야-할-사항">
+<a class="anchor" href="#24-%EC%84%A4%EC%B9%98-%ED%9B%84-%ED%99%95%EC%9D%B8%ED%95%B4%EC%95%BC-%ED%95%A0-%EC%82%AC%ED%95%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4 설치 후 확인해야 할 사항</h3>
+<h3 id="25-mysql-제거">
+<a class="anchor" href="#25-mysql-%EC%A0%9C%EA%B1%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5 MySQL 제거</h3>
+<h3 id="26-linux에-mysql을-설치하기">
+<a class="anchor" href="#26-linux%EC%97%90-mysql%EC%9D%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6 Linux에 MySQL을 설치하기</h3>
+<ul>
+  <li>현장에서는 리눅스에서 더 많이 사용한다.</li>
+</ul>
+
+<h1 id="chapter-03-mysql-전체-운영-실습">
+<a class="anchor" href="#chapter-03-mysql-%EC%A0%84%EC%B2%B4-%EC%9A%B4%EC%98%81-%EC%8B%A4%EC%8A%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter 03 MySQL 전체 운영 실습</h1>
+<h2 id="31-요구사항-분석과-시스템-설계-그리고-모델링">
+<a class="anchor" href="#31-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EB%B6%84%EC%84%9D%EA%B3%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%84%A4%EA%B3%84-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EB%AA%A8%EB%8D%B8%EB%A7%81" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1 요구사항 분석과 시스템 설계 그리고 모델링</h2>
+<h3 id="311-정보시스템-구축-절차-요약">
+<a class="anchor" href="#311-%EC%A0%95%EB%B3%B4%EC%8B%9C%EC%8A%A4%ED%85%9C-%EA%B5%AC%EC%B6%95-%EC%A0%88%EC%B0%A8-%EC%9A%94%EC%95%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1.1 정보시스템 구축 절차 요약</h3>
+<ul>
+  <li>요구사항 분석, 설계, 구현, 시험, 유지보수 5가지 단계.
+    <h3 id="312-데이터베이스-모델링과-필수-용어">
+<a class="anchor" href="#312-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%AA%A8%EB%8D%B8%EB%A7%81%EA%B3%BC-%ED%95%84%EC%88%98-%EC%9A%A9%EC%96%B4" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1.2 데이터베이스 모델링과 필수 용어</h3>
+    <p>데이터베이스 모델링은 현실세계에서 사용되는 데이터를 MySQL에 어떻게 옮겨 놓을 것인지 결정하는 것.</p>
+  </li>
+  <li>열에는 데이터 형식이 있다.</li>
+  <li>기본키는 PK(Primary Key). 기본키는 중복이 없다. 그리고 Null 값이 들어올 수 없다.</li>
+  <li>테이블은 데이터베이스에 담아야 한다. 데이터베이스는 데이터의 저장소이다.</li>
+</ul>
+
+<h2 id="32-데이터베이스-구축">
+<a class="anchor" href="#32-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B5%AC%EC%B6%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2 데이터베이스 구축</h2>
+<h3 id="321-데이터베이스-생성">
+<a class="anchor" href="#321-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%83%9D%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2.1 데이터베이스 생성</h3>
+<p>데이터베이스 생성 -&gt; 테이블 생성 -&gt; 데이터 입력 -&gt; 데이터 조회/활용<br>
+스키마와 데이터베이스는 같은 용어.<br>
+우리는 쇼핑몰 데이터베이스를 만들 예정.</p>
 
   </div><a class="u-url" href="/dailyblog/markdown/database/dbms/mysql/2021/10/18/post017.html" hidden></a>
 </article>
