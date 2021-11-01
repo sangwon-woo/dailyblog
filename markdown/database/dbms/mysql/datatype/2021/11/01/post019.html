@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>MySQL Data Types | Sangwon’s Daily Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="MySQL Data Types" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="공식문서 번역" />
+<meta property="og:description" content="공식문서 번역" />
+<link rel="canonical" href="https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/datatype/2021/11/01/post019.html" />
+<meta property="og:url" content="https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/datatype/2021/11/01/post019.html" />
+<meta property="og:site_name" content="Sangwon’s Daily Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/datatype/2021/11/01/post019.html","@type":"BlogPosting","headline":"MySQL Data Types","dateModified":"2021-11-01T00:00:00-05:00","datePublished":"2021-11-01T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sangwon-woo.github.io/dailyblog/markdown/database/dbms/mysql/datatype/2021/11/01/post019.html"},"description":"공식문서 번역","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/dailyblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sangwon-woo.github.io/dailyblog/feed.xml" title="Sangwon's Daily Blog" /><link rel="shortcut icon" type="image/x-icon" href="/dailyblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/dailyblog/">Sangwon&#39;s Daily Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/dailyblog/about/">About Me</a><a class="page-link" href="/dailyblog/gitInfo/">Github</a><a class="page-link" href="/dailyblog/search/">Search</a><a class="page-link" href="/dailyblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">MySQL Data Types</h1><p class="page-description">공식문서 번역</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-01T00:00:00-05:00" itemprop="datePublished">
+        Nov 1, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      20 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#markdown">markdown</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#database">database</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#dbms">dbms</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#mysql">mysql</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/dailyblog/categories/#datatype">datatype</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#chapter-11-data-types">Chapter 11 Data Types</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#111-숫자-데이터-유형">11.1 숫자 데이터 유형</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#1111-숫자-데이터-유형-구문">11.1.1 숫자 데이터 유형 구문</a></li>
+<li class="toc-entry toc-h3"><a href="#1112-정수-유형정확한-값---integer-int-smallint-tinyint-mediumint-bigint">11.1.2 정수 유형(정확한 값) - INTEGER, INT, SMALLINT, TINYINT, MEDIUMINT, BIGINT</a></li>
+<li class="toc-entry toc-h3"><a href="#1113-고정-소수점-유형정확한-값---decimal-numeric">11.1.3 고정 소수점 유형(정확한 값) - DECIMAL, NUMERIC</a></li>
+<li class="toc-entry toc-h3"><a href="#1114-부동-소수점-유형근사값---float-double">11.1.4 부동 소수점 유형(근사값) - FLOAT, DOUBLE</a></li>
+<li class="toc-entry toc-h3"><a href="#1115-비트-값-유형---bit">11.1.5 비트 값 유형 - BIT</a></li>
+<li class="toc-entry toc-h3"><a href="#1116-숫자-유형-속성">11.1.6 숫자 유형 속성</a></li>
+<li class="toc-entry toc-h3"><a href="#1117-범위-초과-및-오버플로-처리">11.1.7 범위 초과 및 오버플로 처리</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#112-날짜-및-시간-데이터-유형">11.2 날짜 및 시간 데이터 유형</a></li>
+</ul>
+</li>
+</ul><h1 id="chapter-11-data-types">
+<a class="anchor" href="#chapter-11-data-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter 11 Data Types</h1>
+
+<p>MySQL은 숫자 유형, 날짜 및 시간 유형, 문자열(문자 및 바이트) 유형, 공간 유형 및 JSON 데이터 유형과 같은 여러 범주의 SQL 데이터 유형을 지원합니다. 
+이 장에서는 각 범주의 유형 속성에 대한 개요 및 자세한 설명과 데이터 유형 저장 요구 사항에 대한 요약을 제공합니다. 
+초기 개요는 의도적으로 간략합니다. 
+값을 지정할 수 있는 허용되는 형식과 같은 특정 데이터 유형에 대한 추가 정보는 보다 자세한 설명을 참조하십시오.</p>
+
+<p>데이터 유형 설명은 다음 규칙을 사용합니다.</p>
+
+<ul>
+  <li>정수 유형의 경우 M은 최대 표시 너비를 나타냅니다. 부동 소수점 및 고정 소수점 유형의 경우 M은 저장할 수 있는 총 자릿수(정밀도)입니다. 
+문자열 유형의 경우 M은 최대 길이입니다. M의 최대 허용 값은 데이터 유형에 따라 다릅니다.</li>
+  <li>D는 부동 소수점 및 고정 소수점 유형에 적용되며 소수점 이하 자릿수(스케일)를 나타냅니다. 가능한 최대 값은 30이지만 M-2보다 크지 않아야 합니다.</li>
+  <li>fsp는 TIME, DATETIME 및 TIMESTAMP 유형에 적용되며 소수 초 정밀도를 나타냅니다. 즉, 초의 소수 부분에 대한 소수점 이하 자릿수입니다. 
+fsp 값이 주어진 경우 0에서 6 사이여야 합니다. 값이 0이면 소수 부분이 없음을 나타냅니다. 생략하면 기본 정밀도는 0입니다. 
+(이전 MySQL 버전과의 호환성을 위해 표준 SQL 기본값인 6과 다릅니다.)</li>
+  <li>대괄호([ 및 ])는 유형 정의의 선택적 부분을 나타냅니다.</li>
+</ul>
+
+<h2 id="111-숫자-데이터-유형">
+<a class="anchor" href="#111-%EC%88%AB%EC%9E%90-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%9C%A0%ED%98%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1 숫자 데이터 유형</h2>
+<p>11.1.1 숫자 데이터 유형 구문
+11.1.2 정수 유형(정확한 값) - INTEGER, INT, SMALLINT, TINYINT, MEDIUMINT, BIGINT
+11.1.3 고정 소수점 유형(정확한 값) - DECIMAL, NUMERIC
+11.1.4 부동 소수점 유형(근사값) - FLOAT, DOUBLE
+11.1.5 비트 값 유형 - BIT
+11.1.6 숫자 유형 속성
+11.1.7 범위 초과 및 오버플로 처리</p>
+
+<p>MySQL은 모든 표준 SQL 숫자 데이터 유형을 지원합니다. 
+이러한 유형에는 정확한 숫자 데이터 유형(INTEGER, SMALLINT, DECIMAL 및 NUMERIC)과 대략적인 숫자 데이터 유형(FLOAT, REAL 및 DOUBLE PRECISION)이 포함됩니다. 
+키워드 INT는 INTEGER의 동의어이고 키워드 DEC 및 FIXED는 DECIMAL의 동의어입니다. 
+MySQL은 DOUBLE을 DOUBLE PRECISION(비표준 확장)의 동의어로 취급합니다. 
+MySQL은 또한 REAL_AS_FLOAT SQL 모드가 활성화되지 않는 한 REAL을 DOUBLE PRECISION(비표준 변형)의 동의어로 취급합니다.</p>
+
+<p>BIT 데이터 유형은 비트 값을 저장하며 MyISAM, MEMORY, InnoDB 및 NDB 테이블에 대해 지원됩니다.</p>
+
+<p>MySQL이 표현식 평가 중 열에 대한 범위를 벗어난 값의 할당과 오버플로를 처리하는 방법에 대한 정보는 11.1.7절 “범위를 벗어나고 오버플로 처리”를 참조하십시오.</p>
+
+<p>숫자 데이터 유형의 저장 요구 사항에 대한 정보는 11.7절 “데이터 유형 저장 요구 사항”에서 참조하십시오.</p>
+
+<p>숫자 값에 대해 작동하는 함수에 대한 설명은 12.6절 “숫자 함수 및 연산자”를 참조하십시오. 
+숫자 피연산자에 대한 계산 결과에 사용되는 데이터 유형은 피연산자의 유형과 피연산자에 대해 수행되는 연산에 따라 다릅니다. 
+자세한 내용은 12.6.1절 “산술 연산자”에서 참조하십시오.</p>
+
+<h3 id="1111-숫자-데이터-유형-구문">
+<a class="anchor" href="#1111-%EC%88%AB%EC%9E%90-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%9C%A0%ED%98%95-%EA%B5%AC%EB%AC%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1.1 숫자 데이터 유형 구문</h3>
+
+<p>정수 데이터 유형의 경우 M은 최대 표시 너비를 나타냅니다. 최대 표시 너비는 255입니다. 
+표시 너비는 11.1.6절 “숫자 유형 속성”에 설명된 대로 유형이 저장할 수 있는 값의 범위와 관련이 없습니다.</p>
+
+<p>부동 소수점 및 고정 소수점 데이터 유형의 경우 M은 저장할 수 있는 총 자릿수입니다.</p>
+
+<p>MySQL 8.0.17부터 display width 속성은 정수 데이터 유형에 대해 더 이상 사용되지 않습니다. 향후 MySQL 버전에서는 지원이 제거될 것으로 예상해야 합니다.</p>
+
+<p>숫자 열에 대해 ZEROFILL을 지정하면 MySQL은 자동으로 해당 열에 UNSIGNED 속성을 추가합니다.</p>
+
+<p>MySQL 8.0.17부터 ZEROFILL 속성은 숫자 데이터 유형에 대해 더 이상 사용되지 않습니다. 향후 MySQL 버전에서는 지원이 제거될 것으로 예상해야 합니다. 
+이 속성의 효과를 생성하는 대체 수단을 사용하는 것을 고려하십시오. 
+예를 들어, 응용 프로그램은 LPAD() 함수를 사용하여 원하는 너비까지 숫자를 0으로 채우거나 형식이 지정된 숫자를 CHAR 열에 저장할 수 있습니다.</p>
+
+<p>UNSIGNED 속성을 허용하는 숫자 데이터 유형은 SIGNED도 허용합니다. 
+그러나 이러한 데이터 유형은 기본적으로 signed 되므로 SIGNED 속성은 영향을 미치지 않습니다.</p>
+
+<p>MySQL 8.0.17부터 UNSIGNED 속성은 FLOAT, DOUBLE 및 DECIMAL 유형의 열(및 모든 동의어)에 대해 더 이상 사용되지 않습니다. 
+향후 MySQL 버전에서는 지원이 제거될 것으로 예상해야 합니다. 이러한 열 대신에 간단한 CHECK 제약 조건을 사용하는 것이 좋습니다.</p>
+
+<p>SERIAL은 BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE의 별칭입니다.</p>
+
+<p>정수 열 정의에서 SERIAL DEFAULT VALUE는 NOT NULL AUTO_INCREMENT UNIQUE에 대한 별칭입니다.</p>
+
+<ul>
+  <li>BIT[(M)]<br>
+비트 값 유형입니다. M은 1에서 64 사이의 값당 비트 수를 나타냅니다. M이 생략된 경우 기본값은 1입니다.</li>
+  <li>TINYINT[(M)] [UNSIGNED] [ZEROFILL]<br>
+매우 작은 정수입니다. 부호 있는 범위는 -128 ~ 127입니다. 부호 없는 범위는 0 ~ 255입니다.</li>
+  <li>
+    <p>BOOL, BOOLEAN<br>
+이러한 유형은 TINYINT(1)의 동의어입니다. 값이 0이면 false로 간주됩니다. 0이 아닌 값은 true로 간주됩니다.</p>
+  </li>
+  <li>
+    <p>SMALLINT[(M)] [서명되지 않음] [ZEROFILL]<br>
+작은 정수. 부호 있는 범위는 -32768 ~ 32767입니다. 부호 없는 범위는 0 ~ 65535입니다.</p>
+  </li>
+  <li>
+    <p>MEDIUMINT[(M)] [UNSIGNED] [ZEROFILL]<br>
+중간 크기의 정수입니다. 부호 있는 범위는 -8388608 ~ 8388607입니다. 부호 없는 범위는 0 ~ 16777215입니다.</p>
+  </li>
+  <li>
+    <p>INT[(M)] [UNSIGNED] [ZEROFILL]<br>
+일반 크기의 정수입니다. 부호 있는 범위는 -2147483648 ~ 2147483647입니다. 부호 없는 범위는 0 ~ 4294967295입니다.</p>
+  </li>
+  <li>
+    <p>INTEGER[(M)] [UNSIGNED] [ZEROFILL]<br>
+이 유형은 INT의 동의어입니다.</p>
+  </li>
+  <li>
+    <p>BIGINT[(M)] [UNSIGNED] [ZEROFILL]<br>
+큰 정수입니다. 부호 있는 범위는 -9223372036854775808 ~ 9223372036854775807입니다. <br>
+부호 없는 범위는 0 ~ 18446744073709551615입니다.</p>
+
+    <p>SERIAL은 BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE의 별칭입니다.</p>
+
+    <p>BIGINT 열과 관련하여 알아야 할 몇 가지 사항:</p>
+    <ul>
+      <li>
+        <p>모든 산술은 부호 있는 BIGINT 또는 DOUBLE 값을 사용하여 수행되므로 비트 함수를 제외하고  9223372036854775807(63비트)보다 큰 부호 없는 큰 정수를 사용해서는 안 됩니다! <br>
+  그렇게 하면 BIGINT 값을 DOUBLE로 변환할 때 반올림 오류로 인해 결과의 마지막 숫자 중 일부가 틀릴 수 있습니다.</p>
+      </li>
+      <li>MySQL은 다음과 같은 경우 BIGINT를 처리할 수 있습니다.
+        <ul>
+          <li>정수를 사용하여 BIGINT 열에 큰 부호 없는 값을 저장할 때.</li>
+          <li>MIN(col_name) 또는 MAX(col_name)에서 col_name은 BIGINT 열을 나타날 때.</li>
+          <li>두 피연산자가 모두 정수인 연산자(+, -, * 등)를 사용할 때.</li>
+        </ul>
+      </li>
+      <li>문자열을 사용하여 저장하여 항상 정확한 정수 값을 BIGINT 열에 저장할 수 있습니다. <br>
+  이 경우 MySQL은 중간 배정밀도 표현을 포함하지 않는 문자열에서 숫자로의 변환을 수행합니다.</li>
+      <li>-, + 및 * 연산자는 두 피연산자가 모두 정수 값인 경우 BIGINT 산술을 사용합니다. <br>
+  즉, 두 개의 큰 정수(또는 정수를 반환하는 함수의 결과)를 곱하면 결과가 9223372036854775807보다 크면 예기치 않은 결과가 발생할 수 있습니다.</li>
+    </ul>
+  </li>
+  <li>
+    <p>DECIMAL[(M[,D])] [UNSIGNED] [ZEROFILL]<br>
+압축된 “정확한” 고정 소수점 수입니다. M은 총 자릿수(정밀도)이고 D는 소수점 이하 자릿수(스케일)입니다. 소수점과 (음수의 경우) - 기호는 M에서 계산되지 않습니다. 
+D가 0이면 값에는 소수점이나 소수 부분이 없습니다. DECIMAL의 최대 자릿수(M)는 65입니다. 지원되는 최대 소수 자릿수(D)는 30입니다. 
+D를 생략하면 기본값은 0입니다. M을 생략하면 기본값은 10입니다. (DECIMAL 리터럴의 텍스트 길이 제한, 섹션 12.25.3, “표현식 처리” 참조)</p>
+
+    <p>UNSIGNED는 지정된 경우 음수 값을 허용하지 않습니다. MySQL 8.0.17부터 UNSIGNED 속성은 DECIMAL 유형의 열(및 모든 동의어)에 대해 더 이상 사용되지 않습니다. 
+향후 MySQL 버전에서는 지원이 제거될 것으로 예상해야 합니다. 이러한 열 대신에 간단한 CHECK 제약 조건을 사용하는 것이 좋습니다.</p>
+
+    <p>DECIMAL 열이 있는 모든 기본 계산(+, -, *, /)은 65자리의 정밀도로 수행됩니다.</p>
+  </li>
+  <li>
+    <p>DEC[(M[,D])] [UNSIGNED] [ZEROFILL], NUMERIC[(M[,D])] [UNSIGNED] [ZEROFILL], FIXED[(M[,D])] [UNSIGNED] [ZEROFILL]<br>
+이러한 유형은 DECIMAL의 동의어입니다. FIXED 동의어는 다른 데이터베이스 시스템과의 호환성을 위해 사용할 수 있습니다.</p>
+  </li>
+  <li>
+    <p>FLOAT[(M,D)] [UNSIGNED] [ZEROFILL]
+작은(단정밀도) 부동 소수점 숫자입니다. 허용되는 값은 -3.402823466E+38 ~ -1.175494351E-38, 0 및 1.175494351E-38 ~ 3.402823466E+38입니다. 
+IEEE 표준을 기반으로 하는 이론적인 한계입니다. 실제 범위는 하드웨어 또는 운영 체제에 따라 약간 더 작을 수 있습니다.
+M은 총 자릿수이고 D는 소수점 이하 자릿수입니다. M과 D가 생략되면 값은 하드웨어에서 허용하는 한계까지 저장됩니다. 단정밀도 부동 소수점 숫자는 소수점 이하 약 7자리까지 정확합니다.
+FLOAT(M,D)는 비표준 MySQL 확장입니다. MySQL 8.0.17부터 이 구문은 더 이상 사용되지 않으며 향후 MySQL 버전에서는 이 구문에 대한 지원이 제거될 것으로 예상해야 합니다.
+UNSIGNED는 지정된 경우 음수 값을 허용하지 않습니다. 
+MySQL 8.0.17부터 UNSIGNED 속성은 FLOAT 유형의 열(및 모든 동의어)에 대해 더 이상 사용되지 않으며 향후 MySQL 버전에서 제거될 것으로 예상해야 합니다. 
+이러한 열 대신에 간단한 CHECK 제약 조건을 사용하는 것이 좋습니다.
+FLOAT를 사용하면 MySQL의 모든 계산이 배정밀도로 수행되기 때문에 예상치 못한 문제가 발생할 수 있습니다. B.3.4.7절. “일치하는 행이 없는 문제 해결”을 참조하십시오.</p>
+  </li>
+  <li>
+    <p>FLOAT(p) [UNSIGNED] [ZEROFILL]<br>
+부동 소수점 숫자입니다. p는 비트 단위의 정밀도를 나타내지만 MySQL은 결과 데이터 유형에 대해 FLOAT 또는 DOUBLE을 사용할지 여부를 결정하기 위해서만 이 값을 사용합니다. 
+p가 0에서 24 사이이면 데이터 유형은 M 또는 D 값이 없는 FLOAT가 됩니다. p가 25~53이면 데이터 유형은 M 또는 D 값이 없는 DOUBLE이 됩니다. 
+결과 열의 범위는 이 섹션의 앞부분에서 설명한 단정밀도 FLOAT 또는 배정밀도 DOUBLE 데이터 유형과 동일합니다.</p>
+
+    <p>UNSIGNED는 지정된 경우 음수 값을 허용하지 않습니다. 
+MySQL 8.0.17부터 UNSIGNED 속성은 FLOAT 유형의 열(및 모든 동의어)에 대해 더 이상 사용되지 않으며 향후 MySQL 버전에서 제거될 것으로 예상해야 합니다.
+이러한 열 대신에 간단한 CHECK 제약 조건을 사용하는 것이 좋습니다.</p>
+
+    <p>FLOAT(p) 구문은 ODBC 호환성을 위해 제공됩니다.</p>
+  </li>
+  <li>
+    <p>DOUBLE[(M,D)] [UNSIGNED] [ZEROFILL]<br>
+일반 크기(배정밀도) 부동 소수점 숫자입니다. 허용되는 값은 -1.7976931348623157E+308 ~ -2.2250738585072014E-308, 0 및 2.2250738585072014E-308 ~ 1.7976931348입니다. 
+IEEE 표준을 기반으로 하는 이론적인 한계입니다. 실제 범위는 하드웨어 또는 운영 체제에 따라 약간 더 작을 수 있습니다.</p>
+
+    <p>M은 총 자릿수이고 D는 소수점 이하 자릿수입니다. M과 D가 생략되면 값은 하드웨어에서 허용하는 한계까지 저장됩니다. 배정밀도 부동 소수점 숫자는 대략 소수점 이하 15자리까지 정확합니다.</p>
+
+    <p>DOUBLE(M,D)는 비표준 MySQL 확장입니다. MySQL 8.0.17부터 이 구문은 더 이상 사용되지 않으며 향후 MySQL 버전에서는 이 구문에 대한 지원이 제거될 것으로 예상해야 합니다.</p>
+
+    <p>UNSIGNED는 지정된 경우 음수 값을 허용하지 않습니다. 
+MySQL 8.0.17부터 UNSIGNED 속성은 DOUBLE 유형의 열(및 모든 동의어)에 대해 더 이상 사용되지 않으며 향후 MySQL 버전에서 지원이 제거될 것으로 예상해야 합니다. 이러한 열 대신에 간단한 CHECK 제약 조건을 사용하는 것이 좋습니다.</p>
+  </li>
+  <li>DOUBLE PRECISION[(M,D)] [UNSIGNED] [ZEROFILL], REAL[(M,D)] [UNSIGNED] [ZEROFILL]<br>
+이러한 유형은 DOUBLE의 동의어입니다. 
+예외: REAL_AS_FLOAT SQL 모드가 활성화된 경우 REAL은 DOUBLE이 아닌 FLOAT의 동의어입니다.</li>
+</ul>
+
+<h3 id="1112-정수-유형정확한-값---integer-int-smallint-tinyint-mediumint-bigint">
+<a class="anchor" href="#1112-%EC%A0%95%EC%88%98-%EC%9C%A0%ED%98%95%EC%A0%95%ED%99%95%ED%95%9C-%EA%B0%92---integer-int-smallint-tinyint-mediumint-bigint" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1.2 정수 유형(정확한 값) - INTEGER, INT, SMALLINT, TINYINT, MEDIUMINT, BIGINT</h3>
+<p>MySQL은 SQL 표준 정수 유형 INTEGER(또는 INT) 및 SMALLINT를 지원합니다. 표준의 확장으로 MySQL은 정수 유형 TINYINT, MEDIUMINT 및 BIGINT도 지원합니다. 다음 표는 각 정수 유형에 필요한 저장 공간과 범위를 보여줍니다.</p>
+
+<p>Table 11.1 Required Storage and Range for Integer Types Supported by MySQL</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Type</th>
+      <th style="text-align: left">Storage (Bytes)</th>
+      <th style="text-align: left">Minimum Value Signed</th>
+      <th style="text-align: left">Minimum Value Unsigned</th>
+      <th style="text-align: left">Maximum Value Signed</th>
+      <th style="text-align: left">Maximum Value Unsigned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">TINYINT</td>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">-128</td>
+      <td style="text-align: left">0</td>
+      <td style="text-align: left">127</td>
+      <td style="text-align: left">255</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SMALLINT</td>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">-32768</td>
+      <td style="text-align: left">0</td>
+      <td style="text-align: left">32767</td>
+      <td style="text-align: left">65535</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">MEDIUMINT</td>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">-8388608</td>
+      <td style="text-align: left">0</td>
+      <td style="text-align: left">8388607</td>
+      <td style="text-align: left">16777215</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">INT</td>
+      <td style="text-align: left">4</td>
+      <td style="text-align: left">-2147483648</td>
+      <td style="text-align: left">0</td>
+      <td style="text-align: left">2147483647</td>
+      <td style="text-align: left">4294967295</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">BIGINT</td>
+      <td style="text-align: left">8</td>
+      <td style="text-align: left">-2^63</td>
+      <td style="text-align: left">0</td>
+      <td style="text-align: left">2^63-1</td>
+      <td style="text-align: left">2^64-1</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="1113-고정-소수점-유형정확한-값---decimal-numeric">
+<a class="anchor" href="#1113-%EA%B3%A0%EC%A0%95-%EC%86%8C%EC%88%98%EC%A0%90-%EC%9C%A0%ED%98%95%EC%A0%95%ED%99%95%ED%95%9C-%EA%B0%92---decimal-numeric" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1.3 고정 소수점 유형(정확한 값) - DECIMAL, NUMERIC</h3>
+
+<p>DECIMAL 및 NUMERIC 유형은 정확한 숫자 데이터 값을 저장합니다. 이러한 유형은 예를 들어 화폐 데이터와 같이 정확한 정밀도를 유지하는 것이 중요할 때 사용됩니다. MySQL에서 NUMERIC은 DECIMAL로 구현되어 있으므로 DECIMAL에 대한 다음 설명은 NUMERIC에도 동일하게 적용됩니다.</p>
+
+<p>MySQL은 DECIMAL 값을 바이너리 형식으로 저장합니다. 12.25절. “정밀도 연산”을 참조하십시오.</p>
+
+<p>DECIMAL 열 선언에서 정밀도와 스케일은 지정될 수 있으며 일반적으로 지정됩니다. 예를 들어:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">salary</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 예에서 5는 정밀도이고 2는 스케일입니다. 정밀도는 값에 대해 저장된 유효 자릿수를 나타내고 스케일은 소수점 다음에 저장할 수 있는 자릿수를 나타냅니다.</p>
+
+<p>표준 SQL에서는 DECIMAL(5,2)이 5자리와 2자리 소수로 모든 값을 저장할 수 있어야 하므로 급여 열에 저장할 수 있는 값의 범위는 -999.99에서 999.99입니다.</p>
+
+<p>표준 SQL에서 DECIMAL(M) 구문은 DECIMAL(M,0)과 동일합니다. 유사하게, 구문 DECIMAL은 DECIMAL(M,0)과 동일하며, 여기서 M의 값을 결정하도록 구현이 허용됩니다. MySQL은 DECIMAL 구문의 이러한 변형 형태를 모두 지원합니다. M의 기본값은 10입니다.</p>
+
+<p>스케일이 0이면 DECIMAL 값에는 소수점이나 소수 부분이 포함되지 않습니다.</p>
+
+<p>DECIMAL의 최대 자릿수는 65이지만 지정된 DECIMAL 열의 실제 범위는 지정된 열의 정밀도 또는 소수 자릿수로 제한될 수 있습니다. 이러한 열에 지정된 스케일에서 허용하는 것보다 더 많은 소수점 이하 자릿수가 있는 값이 지정되면 값이 해당 스케일로 변환됩니다. (정확한 동작은 운영 체제에 따라 다르지만 일반적으로 효과는 허용되는 자릿수로 잘립니다.)</p>
+
+<h3 id="1114-부동-소수점-유형근사값---float-double">
+<a class="anchor" href="#1114-%EB%B6%80%EB%8F%99-%EC%86%8C%EC%88%98%EC%A0%90-%EC%9C%A0%ED%98%95%EA%B7%BC%EC%82%AC%EA%B0%92---float-double" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1.4 부동 소수점 유형(근사값) - FLOAT, DOUBLE</h3>
+<p>FLOAT 및 DOUBLE 유형은 대략적인 숫자 데이터 값을 나타냅니다. MySQL은 단정밀도 값에 4바이트를 사용하고 배정밀도 값에 8바이트를 사용합니다.</p>
+
+<p>FLOAT의 경우, SQL 표준은 괄호 안에 키워드 FLOAT 다음에 오는 비트 단위의 정밀도(지수 범위가 아님)의 선택적 사양을 허용합니다. ; 즉, FLOAT(p)입니다. MySQL은 이 선택적 정밀도 사양도 지원하지만 FLOAT(p)의 정밀도 값은 저장소 크기를 결정하는 데만 사용됩니다. 0에서 23 사이의 정밀도는 4바이트 단정밀도 FLOAT 열을 생성합니다. 24에서 53 사이의 정밀도는 8바이트 배정밀도 DOUBLE 열을 생성합니다.</p>
+
+<p>MySQL은 FLOAT(M,D) 또는 REAL(M,D) 또는 DOUBLE PRECISION(M,D)과 같은 비표준 구문을 허용합니다. 여기서 (M,D)는 총 M자리까지 저장할 수 있으며 그 중 D자리는 소수점 이하일 수 있음을 의미합니다. 예를 들어, FLOAT(7,4)로 정의된 열은 -999.9999로 표시됩니다. MySQL은 값을 저장할 때 반올림을 수행하므로 FLOAT(7,4) 열에 999.00009를 삽입하면 대략적인 결과는 999.0001이 됩니다.</p>
+
+<p>MySQL 8.0.17부터 비표준 FLOAT(M,D) 및 DOUBLE(M,D) 구문은 더 이상 사용되지 않으며 향후 MySQL 버전에서 이에 대한 지원이 제거될 것으로 예상해야 합니다.</p>
+
+<p>부동 소수점 값은 근사치이며 정확한 값으로 저장되지 않기 때문에 비교 시 부동 소수점 값을 정확한 값으로 처리하려고 하면 문제가 발생할 수 있습니다. 또한 플랫폼 또는 구현 종속성의 영향을 받습니다. 자세한 내용은 B.3.4.8절. “부동 소수점 값 문제”에서 참조하십시오.</p>
+
+<p>최대 이식성을 위해 대략적인 숫자 데이터 값을 저장해야 하는 코드는 정밀도나 자릿수를 지정하지 않고 FLOAT 또는 DOUBLE PRECISION을 사용해야 합니다.</p>
+
+<h3 id="1115-비트-값-유형---bit">
+<a class="anchor" href="#1115-%EB%B9%84%ED%8A%B8-%EA%B0%92-%EC%9C%A0%ED%98%95---bit" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1.5 비트 값 유형 - BIT</h3>
+<p>BIT 데이터 유형은 비트 값을 저장하는 데 사용됩니다. BIT(M) 유형은 M비트 값을 저장할 수 있습니다. M의 범위는 1에서 64까지입니다.</p>
+
+<p>비트 값을 지정하려면 b’value’ 표기법을 사용할 수 있습니다. 값은 0과 1을 사용하여 작성된 이진 값입니다. 예를 들어 b’111’과 b’10000000’은 각각 7과 128을 나타냅니다. 9.1.5절. “비트 값 리터럴”을 참조하십시오.</p>
+
+<p>M 비트보다 작은 BIT(M) 열에 값을 할당하면 값이 왼쪽에 0으로 채워집니다. 예를 들어, BIT(6) 열에 b’101’ 값을 할당하는 것은 사실상 b’000101’을 할당하는 것과 같습니다.</p>
+
+<p>NDB 클러스터. 주어진 NDB 테이블에 사용된 모든 BIT 열의 최대 결합 크기는 4096비트를 초과할 수 없습니다.</p>
+
+<h3 id="1116-숫자-유형-속성">
+<a class="anchor" href="#1116-%EC%88%AB%EC%9E%90-%EC%9C%A0%ED%98%95-%EC%86%8D%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1.6 숫자 유형 속성</h3>
+<p>MySQL은 유형에 대한 기본 키워드 다음에 오는 괄호 안에 정수 데이터 유형의 표시 너비를 선택적으로 지정하기 위한 확장을 지원합니다. 예를 들어, INT(4)는 표시 너비가 4자리인 INT를 지정합니다. 이 선택적 표시 너비는 공백으로 왼쪽을 채워 열에 지정된 너비보다 작은 너비를 갖는 정수 값을 표시하기 위해 애플리케이션에서 사용할 수 있습니다. (즉, 이 너비는 결과 집합과 함께 반환된 메타데이터에 존재합니다. 사용 여부는 응용 프로그램에 달려 있습니다.)</p>
+
+<p>표시 너비는 열에 저장할 수 있는 값의 범위를 제한하지 않습니다. 또한 열 표시 너비보다 넓은 값이 올바르게 표시되는 것을 방지하지도 않습니다. 예를 들어, SMALLINT(3)으로 지정된 열의 일반적인 SMALLINT 범위는 -32768 ~ 32767이며 세 자리에서 허용하는 범위를 벗어난 값은 세 자리 이상을 사용하여 전체가 표시됩니다.</p>
+
+<p>선택적(비표준) ZEROFILL 속성과 함께 사용하면 공백의 기본 패딩이 0으로 바뀝니다. 예를 들어 INT(4) ZEROFILL로 선언된 열의 경우 값 5는 0005로 검색됩니다.</p>
+<blockquote>
+  <p>NOTE<br>
+ZEROFILL 속성은 표현식 또는 UNION 쿼리와 관련된 열에 대해 무시됩니다.  <br>
+ZEROFILL 속성이 있는 정수 열에 표시 너비보다 큰 값을 저장하면 MySQL이 일부 복잡한 조인에 대한 임시 테이블을 생성할 때 문제가 발생할 수 있습니다. 이러한 경우 MySQL은 데이터 값이 열 표시 너비에 맞는다고 가정합니다.</p>
+</blockquote>
+
+<p>MySQL 8.0.17부터 ZEROFILL 속성은 정수 데이터 유형에 대한 표시 너비 속성과 마찬가지로 숫자 데이터 유형에 대해 더 이상 사용되지 않습니다. 향후 MySQL 버전에서는 ZEROFILL 지원 및 정수 데이터 유형에 대한 표시 너비가 제거될 것으로 예상해야 합니다. 이러한 속성의 효과를 생성하는 대체 수단을 사용하는 것을 고려하십시오. 예를 들어, 응용 프로그램은 LPAD() 함수를 사용하여 원하는 너비까지 숫자를 0으로 채우거나 형식이 지정된 숫자를 CHAR 열에 저장할 수 있습니다.</p>
+
+<p>모든 정수 유형은 선택적(비표준) UNSIGNED 속성을 가질 수 있습니다. 열에 음수가 아닌 숫자만 허용하거나 열에 더 큰 상위 숫자 범위가 필요한 경우 부호 없는 유형을 사용할 수 있습니다. 예를 들어, INT 열이 UNSIGNED이면 열 범위의 크기는 동일하지만 끝점은 -2147483648 및 2147483647에서 0 및 4294967295로 위로 이동합니다.</p>
+
+<p>부동 소수점 및 고정 소수점 유형도 UNSIGNED일 수 있습니다. 정수 유형과 마찬가지로 이 속성은 음수 값이 열에 저장되는 것을 방지합니다. 정수 유형과 달리 열 값의 상위 범위는 동일하게 유지됩니다. MySQL 8.0.17부터 UNSIGNED 속성은 FLOAT, DOUBLE 및 DECIMAL(및 모든 동의어) 유형의 열에 대해 더 이상 사용되지 않으며 향후 MySQL 버전에서 지원이 제거될 것으로 예상해야 합니다. 이러한 열 대신에 간단한 CHECK 제약 조건을 사용하는 것이 좋습니다.</p>
+
+<p>숫자 열에 ZEROFILL을 지정하면 MySQL은 자동으로 UNSIGNED 속성을 추가합니다.</p>
+
+<p>정수 또는 부동 소수점 데이터 유형은 AUTO_INCREMENT 속성을 가질 수 있습니다. 인덱싱된 AUTO_INCREMENT 열에 NULL 값을 삽입하면 열이 다음 시퀀스 값으로 설정됩니다. 일반적으로 값은 현재 테이블에 있는 열의 가장 큰 값인 값+1입니다. (AUTO_INCREMENT 시퀀스는 1로 시작합니다.)</p>
+
+<p>NO_AUTO_VALUE_ON_ZERO SQL 모드가 활성화되지 않는 한 0을 AUTO_INCREMENT 열에 저장하는 것은 NULL을 저장하는 것과 같은 효과를 가집니다.</p>
+
+<p>AUTO_INCREMENT 값을 생성하기 위해 NULL을 삽입하려면 열이 NOT NULL로 선언되어야 합니다. 열이 NULL로 선언된 경우 NULL을 삽입하면 NULL이 저장됩니다. 다른 값을 AUTO_INCREMENT 열에 삽입하면 해당 열이 해당 값으로 설정되고 시퀀스가 ​​재설정되어 다음 자동 생성 값이 삽입된 값에서 순차적으로 따라옵니다.</p>
+
+<p>AUTO_INCREMENT 열에 대한 음수 값은 지원되지 않습니다.</p>
+
+<p>CHECK 제약 조건은 AUTO_INCREMENT 속성이 있는 열을 참조할 수 없으며 CHECK 제약 조건에서 사용되는 기존 열에 AUTO_INCREMENT 속성을 추가할 수도 없습니다.</p>
+
+<p>MySQL 8.0.17부터 AUTO_INCREMENT 지원은 FLOAT 및 DOUBLE 열에 대해 더 이상 사용되지 않습니다. MySQL의 향후 버전에서 제거될 것으로 예상해야 합니다. 이러한 열에서 AUTO_INCREMENT 속성을 제거하거나 정수 유형으로 변환하는 것을 고려하십시오.</p>
+
+<h3 id="1117-범위-초과-및-오버플로-처리">
+<a class="anchor" href="#1117-%EB%B2%94%EC%9C%84-%EC%B4%88%EA%B3%BC-%EB%B0%8F-%EC%98%A4%EB%B2%84%ED%94%8C%EB%A1%9C-%EC%B2%98%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.1.7 범위 초과 및 오버플로 처리</h3>
+<p>MySQL이 열 데이터 유형의 허용 범위를 벗어난 숫자 열에 값을 저장할 때 결과는 당시에 유효한 SQL 모드에 따라 다릅니다.</p>
+<ul>
+  <li>엄격한 SQL 모드가 활성화되면 MySQL은 SQL 표준에 따라 범위를 벗어난 값을 오류와 함께 거부하고 삽입이 실패합니다.</li>
+  <li>제한 모드가 활성화되지 않은 경우 MySQL은 값을 열 데이터 유형 범위의 적절한 끝점으로 자르고 대신 결과 값을 저장합니다.<br>
+범위를 벗어난 값이 정수 열에 할당되면 MySQL은 열 데이터 유형 범위의 해당 끝점을 나타내는 값을 저장합니다.<br>
+부동 소수점 또는 고정 소수점 열에 지정된(또는 기본) 정밀도 및 스케일이 암시하는 범위를 초과하는 값이 할당되면 MySQL은 해당 범위의 해당 끝점을 나타내는 값을 저장합니다.</li>
+</ul>
+
+<p>테이블 t1에 다음 정의가 있다고 가정합니다.</p>
+<pre><code class="language-SQL">CREATE TABLE t1 (i1 TINYINT, i2 TINYINT UNSIGNED);
+</code></pre>
+<p>엄격한 SQL 모드가 활성화되면 범위 초과 오류가 발생합니다.</p>
+<pre><code class="language-SQL">mysql&gt; SET sql_mode = 'TRADITIONAL';
+mysql&gt; INSERT INTO t1 (i1, i2) VALUES(256, 256);
+ERROR 1264 (22003): Out of range value for column 'i1' at row 1
+mysql&gt; SELECT * FROM t1;
+Empty set (0.00 sec)
+</code></pre>
+<p>엄격한 SQL 모드가 활성화되지 않은 경우 경고와 함께 클리핑이 발생합니다.</p>
+<pre><code class="language-SQL">mysql&gt; SET sql_mode = '';
+mysql&gt; INSERT INTO t1 (i1, i2) VALUES(256, 256);
+mysql&gt; SHOW WARNINGS;
++---------+------+---------------------------------------------+
+| Level   | Code | Message                                     |
++---------+------+---------------------------------------------+
+| Warning | 1264 | Out of range value for column 'i1' at row 1 |
+| Warning | 1264 | Out of range value for column 'i2' at row 1 |
++---------+------+---------------------------------------------+
+mysql&gt; SELECT * FROM t1;
++------+------+
+| i1   | i2   |
++------+------+
+|  127 |  255 |
++------+------+
+</code></pre>
+<p>엄격한 SQL 모드가 활성화되지 않은 경우 클리핑으로 인해 발생하는 열 할당 변환은 ALTER TABLE, LOAD DATA, UPDATE 및 다중 행 INSERT 문에 대한 경고로 보고됩니다. 엄격 모드에서는 이러한 명령문이 실패하고 테이블이 트랜잭션 테이블인지 여부 및 기타 요인에 따라 일부 또는 모든 값이 삽입되거나 변경되지 않습니다. 자세한 내용은 5.1.11절. “서버 SQL 모드”에서 참조하십시오.</p>
+
+<p>숫자 표현식 평가 중 오버플로로 인해 오류가 발생합니다. 예를 들어, 가장 큰 부호 있는 BIGINT 값은 9223372036854775807이므로 다음 표현식은 오류를 생성합니다.</p>
+<pre><code class="language-SQL">mysql&gt; SELECT 9223372036854775807 + 1;
+ERROR 1690 (22003): BIGINT value is out of range in '(9223372036854775807 + 1)'
+</code></pre>
+<p>이 경우 작업이 성공하려면 값을 unsigned로 변환합니다.</p>
+<pre><code class="language-SQL">mysql&gt; SELECT CAST(9223372036854775807 AS UNSIGNED) + 1;
++-------------------------------------------+
+| CAST(9223372036854775807 AS UNSIGNED) + 1 |
++-------------------------------------------+
+|                       9223372036854775808 |
++-------------------------------------------+
+</code></pre>
+<p>오버플로 발생 여부는 피연산자의 범위에 따라 다르므로 DECIMAL 값의 범위가 정수보다 크기 때문에 앞의 표현식을 처리하는 또 다른 방법은 정확한 값 산술을 사용하는 것입니다.</p>
+<pre><code class="language-SQL">mysql&gt; SELECT 9223372036854775807.0 + 1;
++---------------------------+
+| 9223372036854775807.0 + 1 |
++---------------------------+
+|     9223372036854775808.0 |
++---------------------------+
+</code></pre>
+<p>하나가 UNSIGNED 유형인 정수 값 사이의 빼기는 기본적으로 부호 없는 결과를 생성합니다. 그렇지 않으면 결과가 음수였을 경우 오류가 발생합니다.</p>
+<pre><code class="language-SQL">mysql&gt; SET sql_mode = '';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; SELECT CAST(0 AS UNSIGNED) - 1;
+ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in '(cast(0 as unsigned) - 1)'
+</code></pre>
+
+<p>NO_UNSIGNED_SUBTRACTION SQL 모드가 활성화된 경우 결과는 음수입니다.</p>
+<pre><code class="language-SQL">mysql&gt; SET sql_mode = 'NO_UNSIGNED_SUBTRACTION';
+mysql&gt; SELECT CAST(0 AS UNSIGNED) - 1;
++-------------------------+
+| CAST(0 AS UNSIGNED) - 1 |
++-------------------------+
+|                      -1 |
++-------------------------+
+</code></pre>
+<p>이러한 작업의 결과가 UNSIGNED 정수 열을 업데이트하는 데 사용되는 경우 결과는 열 유형의 최대값으로 잘리거나 NO_UNSIGNED_SUBTRACTION이 활성화된 경우 0으로 잘립니다. 엄격한 SQL 모드가 활성화되면 오류가 발생하고 열이 변경되지 않은 상태로 유지됩니다.</p>
+
+<h2 id="112-날짜-및-시간-데이터-유형">
+<a class="anchor" href="#112-%EB%82%A0%EC%A7%9C-%EB%B0%8F-%EC%8B%9C%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%9C%A0%ED%98%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>11.2 날짜 및 시간 데이터 유형</h2>
+<p>11.2.1 Date and Time Data Type Syntax<br>
+11.2.2 The DATE, DATETIME, and TIMESTAMP Types<br>
+11.2.3 The TIME Type<br>
+11.2.4 The YEAR Type<br>
+11.2.5 Automatic Initialization and Updating for TIMESTAMP and DATETIME<br>
+11.2.6 Fractional Seconds in Time Values<br>
+11.2.7 Conversion Between Date and Time Types<br>
+11.2.8 2-Digit Years in Dates</p>
+
+<p>시간 값을 나타내는 날짜 및 시간 데이터 유형은 DATE, TIME, DATETIME, TIMESTAMP 및 YEAR입니다. 각 임시 유형에는 유효한 값 범위와 MySQL이 나타낼 수 없는 유효하지 않은 값을 지정할 때 사용할 수 있는 “0” 값이 있습니다. TIMESTAMP 및 DATETIME 유형에는 11.2.5절. “TIMESTAMP 및 DATETIME에 대한 자동 초기화 및 업데이트”에 설명된 특수한 자동 업데이트 동작이 있습니다.</p>
+
+<p>임시 데이터 유형의 저장 요구 사항에 대한 정보는 11.7절. “데이터 유형 저장 요구 사항”에서 참조하십시오.</p>
+
+<p>시간 값에 대해 작동하는 함수에 대한 설명은 12.7절. “날짜 및 시간 함수”를 참조하십시오.</p>
+
+<p>날짜 및 시간 유형으로 작업할 때 다음과 같은 일반적인 고려 사항을 염두에 두십시오.</p>
+
+<ul>
+  <li>
+    <p>MySQL은 표준 출력 형식으로 주어진 날짜 또는 시간 유형에 대한 값을 검색하지만 사용자가 제공하는 입력 값에 대한 다양한 형식을 해석하려고 시도합니다(예: 날짜 또는 날짜에 할당하거나 비교할 값을 지정할 때 시간 유형). 날짜 및 시간 유형에 대해 허용되는 형식에 대한 설명은 9.1.3절. “날짜 및 시간 리터럴”을 참조하십시오. 유효한 값을 제공해야 합니다. 다른 형식의 값을 사용하면 예측할 수 없는 결과가 발생할 수 있습니다.</p>
+  </li>
+  <li>
+    <p>MySQL은 여러 형식으로 값을 해석하려고 시도하지만 날짜 부분은 항상 월-일-년 또는 일-월-보다는 년-월-일 순서(예: ‘98-09-04’)로 지정해야 합니다. 다른 곳에서 일반적으로 사용되는 연도 순서(예: ‘09-04-98’, ‘04-09-98’). 다른 순서의 문자열을 년-월-일 순서로 변환하려면 STR_TO_DATE() 함수가 유용할 수 있습니다.</p>
+  </li>
+  <li>
+    <p>2자리 연도 값을 포함하는 날짜는 세기를 알 수 없기 때문에 모호합니다. MySQL은 다음 규칙을 사용하여 2자리 연도 값을 해석합니다.</p>
+    <ul>
+      <li>70-99 범위의 연도 값은 1970-1999가 됩니다.</li>
+      <li>00-69 범위의 연도 값은 2000-2069년이 됩니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>11.2.8절. “2자리 연도”도 참조하십시오.</p>
+
+<ul>
+  <li>
+    <p>한 시간 유형에서 다른 시간 유형으로의 값 변환은 11.2.7절. “날짜 및 시간 유형 간 변환”의 규칙에 따라 발생합니다.</p>
+  </li>
+  <li>
+    <p>값이 숫자 컨텍스트에서 사용되는 경우 MySQL은 날짜 또는 시간 값을 숫자로 자동 변환하고 그 반대의 경우도 마찬가지입니다.</p>
+  </li>
+  <li>
+    <p>기본적으로 MySQL은 범위를 벗어나거나 해당 유형에 대해 유효하지 않은 날짜 또는 시간 유형 값을 발견하면 값을 해당 유형의 “0” 값으로 변환합니다. 예외는 범위를 벗어난 TIME 값이 TIME 범위의 적절한 끝점으로 잘리는 것입니다.</p>
+  </li>
+  <li>
+    <p>SQL 모드를 적절한 값으로 설정하면 MySQL이 지원하기를 원하는 날짜의 종류를 보다 정확하게 지정할 수 있습니다. (섹션 5.1.11, “서버 SQL 모드”를 참조하십시오.) ALLOW_INVALID_DATES SQL 모드를 활성화하여 MySQL이 ‘2009-11-31’과 같은 특정 날짜를 수락하도록 할 수 있습니다. 이는 향후 처리를 위해 사용자가 지정한(예: 웹 형식) “잘못된” 값을 데이터베이스에 저장하려는 경우에 유용합니다. 이 모드에서 MySQL은 월이 1에서 12 사이의 범위에 있고 일이 1에서 31 사이에 있는지만 확인합니다.</p>
+  </li>
+  <li>
+    <p>MySQL에서는 DATE 또는 DATETIME 열에 일 또는 월과 일이 0인 날짜를 저장할 수 있습니다. 이것은 정확한 날짜를 알 수 없는 생년월일을 저장해야 하는 응용 프로그램에 유용합니다. 이 경우 날짜를 ‘2009-00-00’ 또는 ‘2009-01-00’으로 저장하면 됩니다. 그러나 이와 같은 날짜를 사용하면 완전한 날짜가 필요한 DATE_SUB() 또는 DATE_ADD()와 같은 함수에 대해 올바른 결과를 기대해서는 안 됩니다. 날짜에서 0월 또는 일 부분을 허용하지 않으려면 NO_ZERO_IN_DATE 모드를 활성화하십시오.</p>
+  </li>
+  <li>
+    <p>MySQL에서는 ‘0000-00-00’의 “0” 값을 “더미 날짜”로 저장할 수 있습니다. 경우에 따라 이것은 NULL 값을 사용하는 것보다 더 편리하고 더 적은 데이터와 인덱스 공간을 사용합니다. ‘0000-00-00’을 허용하지 않으려면 NO_ZERO_DATE 모드를 활성화하십시오.</p>
+  </li>
+  <li>
+    <p>커넥터/ODBC를 통해 사용되는 “0” 날짜 또는 시간 값은 ODBC가 이러한 값을 처리할 수 없기 때문에 자동으로 NULL로 변환됩니다.</p>
+  </li>
+</ul>
+
+<p>다음 표는 각 유형에 대한 “0” 값의 형식을 보여줍니다. “0” 값은 특별하지만 표에 표시된 값을 사용하여 명시적으로 저장하거나 참조할 수 있습니다. 쓰기가 더 쉬운 ‘0’ 또는 0 값을 사용하여 이 작업을 수행할 수도 있습니다. 날짜 부분(DATE, DATETIME 및 TIMESTAMP)을 포함하는 시간 유형의 경우 이러한 값을 사용하면 경고 또는 오류가 발생할 수 있습니다. 정확한 동작은 엄격 및 NO_ZERO_DATE SQL 모드가 활성화된 경우에 따라 다릅니다. 5.1.11절. “서버 SQL 모드”를 참조하십시오.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">“Zero” Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">DATE</td>
+      <td style="text-align: left">‘0000-00-00’</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TIME</td>
+      <td style="text-align: left">‘00:00:00’</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATETIME</td>
+      <td style="text-align: left">‘0000-00-00 00:00:00’</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TIMESTAMP</td>
+      <td style="text-align: left">‘0000-00-00 00:00:00’</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">YEAR</td>
+      <td style="text-align: left">0000</td>
+    </tr>
+  </tbody>
+</table>
+
+
+  </div><a class="u-url" href="/dailyblog/markdown/database/dbms/mysql/datatype/2021/11/01/post019.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/dailyblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/dailyblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/dailyblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Simple TIL trace</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/sangwon-woo" title="sangwon-woo"><svg class="svg-icon grey"><use xlink:href="/dailyblog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -381,6 +381,12 @@ GUI크기를 재조정하는 이벤트를 생성한다.</li>
 <span class="o">(</span>base<span class="o">)</span> conda config <span class="nt">--set</span> auto_activate_base <span class="nb">false</span>
 </code></pre></div></div>
 
+<h3 id="anaconda-가상환경에서-mysql-connector-설치-및-사용">Anaconda 가상환경에서 mysql connector 설치 및 사용</h3>
+<p>pip install mysql-connector-python</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">mysql</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">mysql</span><span class="p">.</span><span class="n">connector</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s">'root'</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">'1234'</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">'127.0.0.1'</span><span class="p">)</span>
+</code></pre></div></div>
+
 
   </div><a class="u-url" href="/dailyblog/markdown/programming/cookbook/tip/software/2021/08/25/post011.html" hidden></a>
 </article>
