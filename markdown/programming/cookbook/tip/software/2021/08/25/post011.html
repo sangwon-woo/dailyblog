@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -385,6 +385,20 @@ GUI크기를 재조정하는 이벤트를 생성한다.</li>
 <p>pip install mysql-connector-python</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">mysql</span>
 <span class="n">conn</span> <span class="o">=</span> <span class="n">mysql</span><span class="p">.</span><span class="n">connector</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s">'root'</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">'1234'</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">'127.0.0.1'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="matplotlib-폰트-설정-및---깨짐-설정">Matplotlib 폰트 설정 및 ‘-‘ 깨짐 설정</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="n">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="k">as</span> <span class="n">fm</span>
+
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.unicode_minus'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'font.family'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'NanumBarunGothic'</span>
+
+<span class="c1"># sorted([(f.name, f.fname) for f in fm.fontManager.ttflist if 'Gothic' in f.name])
+</span>
+<span class="kn">from</span> <span class="nn">IPython.core.interactiveshell</span> <span class="kn">import</span> <span class="n">InteractiveShell</span>
+<span class="n">InteractiveShell</span><span class="p">.</span><span class="n">ast_node_interactivity</span> <span class="o">=</span> <span class="s">'all'</span>
 </code></pre></div></div>
 
 
