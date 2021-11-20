@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      22 min read
+      24 min read
     
 </span></p>
 
@@ -157,6 +157,13 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#엑셀-파일-사용">엑셀 파일 사용</a></li>
 <li class="toc-entry toc-h2"><a href="#zip-파일로-작업">ZIP 파일로 작업</a></li>
 <li class="toc-entry toc-h2"><a href="#데이터베이스와-작업">데이터베이스와 작업</a></li>
+<li class="toc-entry toc-h2"><a href="#json-파일-읽기">JSON 파일 읽기</a></li>
+<li class="toc-entry toc-h2"><a href="#html-테이블-읽기">HTML 테이블 읽기</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#데이터-분석-시작">데이터 분석 시작</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#데이터-분석-루틴-개발">데이터 분석 루틴 개발</a></li>
 </ul>
 </li>
 </ul><h1 id="1장-판다스-기초">
@@ -1072,6 +1079,90 @@ zipfile 모듈은 URL과는 작동하지 않는다. 따라서 ZIP 파일이 URL�
 
 <h2 id="데이터베이스와-작업">
 <a class="anchor" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%99%80-%EC%9E%91%EC%97%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>데이터베이스와 작업</h2>
+<p>데이터를 저장하기 위한 SQLite 데이터베이스를 생성한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"d:/data/beat.db"</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">con</span><span class="p">:</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"""DROP TABLE band"""</span><span class="p">)</span>
+    <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"""CREATE TABLE Band(
+        id INTEGER PRIMARY KEY,
+        fname TEXT,
+        lname TEXT,
+        birthyear INT
+    )"""</span><span class="p">)</span>
+    <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"""INSERT INTO Band VALUES(0, 'Paul', 'McCartney', 1942)"""</span><span class="p">)</span>
+    <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"""INSERT INTO Band VALUES(1, 'John', 'Lennon', 1940)"""</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span>
+</code></pre></div></div>
+<p>이제 데이터베이스에서 테이블을 DataFrame으로 읽어본다.<br>
+테이블을 읽으려면 SQLAlchemy와 연결이 필요하다. 이 라이브러리는 데이터베이스를 추상화한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="n">sa</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">sa</span><span class="p">.</span><span class="n">create_engine</span><span class="p">(</span>
+    <span class="s">"sqlite:///data/beat.db"</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+<span class="n">sa_connection</span> <span class="o">=</span> <span class="n">engine</span><span class="p">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="n">beat</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span>
+    <span class="s">"Band"</span><span class="p">,</span> <span class="n">sa_connection</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">'id'</span>
+<span class="p">)</span>
+
+<span class="n">sql</span> <span class="o">=</span> <span class="s">"""SELECT fname, birthyear from Band"""</span>
+<span class="n">fnames</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+</code></pre></div></div>
+<p>판다스 라이브러리는 SQLAlchemy 라이브러리를 활용하는데 대부분의 SQL 데이터베이스와 소통할 수 있다.</p>
+
+<h2 id="json-파일-읽기">
+<a class="anchor" href="#json-%ED%8C%8C%EC%9D%BC-%EC%9D%BD%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON 파일 읽기</h2>
+<p>파이썬 표준 라이브러리에는 JSON에서 인코딩과 디코딩이 되는 json 라이브러리가 들어있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="n">encoded</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+<span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+
+<span class="n">beatles</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+</code></pre></div></div>
+<p>read_json() 함수를 이용해 데이터를 읽는다. json 파일을 읽을 때 알아둬야 할 것은 판다스가 로드할 수 있는 특정 형식이어야 한다는 것이다.<br>
+판다스는 몇 가지 데이터 방향을 지원한다.</p>
+<ul>
+  <li>columns : (기본설정) 열 이름과 열에 있는 값 리스트의 매핑이다.</li>
+  <li>records : 행의 리스트로, 각 행은 열과 값을 매핑하는 딕셔너리다.</li>
+  <li>split : columns를 열 이름에, index를 인덱스 값에, data를 각 데이터의 행 리스트에 매핑한다.</li>
+  <li>index : 데이터에서 각 행의 리스트다. 열이나 인덱스 값을 포함하지 않는다.</li>
+  <li>table : schema를 DataFrame 스키마에, data를 딕셔너리의 리스트에 연결한다.</li>
+</ul>
+
+<p>다음은 이러한 형식의 예이다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">records</span> <span class="o">=</span> <span class="n">beatles</span><span class="p">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">'records'</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s">'records'</span><span class="p">)</span>
+
+<span class="n">split</span> <span class="o">=</span> <span class="n">beatles</span><span class="p">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">'split'</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s">'split'</span><span class="p">)</span>
+
+<span class="n">index</span> <span class="o">=</span> <span class="n">beatles</span><span class="p">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">'index'</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s">'index'</span><span class="p">)</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">beatles</span><span class="p">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">'values'</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s">'values'</span><span class="p">).</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">([</span><span class="s">'first'</span><span class="p">,</span> <span class="s">'last'</span><span class="p">,</span> <span class="s">'birth'</span><span class="p">])))</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">beatles</span><span class="p">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">'table'</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s">'table'</span><span class="p">)</span>
+</code></pre></div></div>
+<p>JSON을 생성해야 하는 경우(웹 서비스 작성 등)라면 columns나 records 방향을 권장한다. 
+만약 JSON에 데이터를 추가해야 하는 경우라면 .to_dict() 메서드를 사용해 딕셔너리를 생성하라.<br>
+새 데이터를 딕셔너리에 추가한 다음 해당 딕셔너리를 JSON으로 변환할 수 있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">output</span> <span class="o">=</span> <span class="n">beat</span><span class="p">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="n">output</span><span class="p">[</span><span class="s">'version'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'0.4.1'</span>
+<span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="html-테이블-읽기">
+<a class="anchor" href="#html-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%9D%BD%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML 테이블 읽기</h2>
+
+<h1 id="데이터-분석-시작">
+<a class="anchor" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%84%EC%84%9D-%EC%8B%9C%EC%9E%91" aria-hidden="true"><span class="octicon octicon-link"></span></a>데이터 분석 시작</h1>
+<h2 id="데이터-분석-루틴-개발">
+<a class="anchor" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%84%EC%84%9D-%EB%A3%A8%ED%8B%B4-%EA%B0%9C%EB%B0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>데이터 분석 루틴 개발</h2>
 
 
   </div><a class="u-url" href="/dailyblog/markdown/database/dbms/mysql/datatype/2021/11/05/post020.html" hidden></a>
