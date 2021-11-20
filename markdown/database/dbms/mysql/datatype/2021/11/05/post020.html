@@ -156,6 +156,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#대형-csv-파일-읽기">대형 CSV 파일 읽기</a></li>
 <li class="toc-entry toc-h2"><a href="#엑셀-파일-사용">엑셀 파일 사용</a></li>
 <li class="toc-entry toc-h2"><a href="#zip-파일로-작업">ZIP 파일로 작업</a></li>
+<li class="toc-entry toc-h2"><a href="#데이터베이스와-작업">데이터베이스와 작업</a></li>
 </ul>
 </li>
 </ul><h1 id="1장-판다스-기초">
@@ -1045,6 +1046,32 @@ xlrd도 마찬가지로 사용하지 말자. openpyxl은 .xlsx 파일을 읽고 
 
 <h2 id="zip-파일로-작업">
 <a class="anchor" href="#zip-%ED%8C%8C%EC%9D%BC%EB%A1%9C-%EC%9E%91%EC%97%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>ZIP 파일로 작업</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">autos</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"data/vehicles.csv.zip"</span><span class="p">)</span>
+<span class="n">autos</span><span class="p">[</span><span class="s">'modifiedOn'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">auto</span><span class="p">[</span><span class="s">'modifiedOn'</span><span class="p">])</span>
+<span class="n">autos</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'data/vehicles.csv.zip'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s">'modifiedOn'</span><span class="p">])</span>
+</code></pre></div></div>
+<p>zip 파일에 csv파일 하나만 있다면 바로 읽을 수 있다. <br>
+오브젝트 타입을 날짜 타입으로 변환하는 데 2가지 방법이 있다. 하나는 pd.to_datetime() 메서드를 사용하는 것이다.<br>
+다른 하나는 parse_dates 인자에 컬럼 값을 리스트에 넣어서 csv파일을 읽는 것이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="n">ZipFile</span><span class="p">(</span>
+    <span class="s">'data/kaggle-survey-2018.zip'</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">z</span><span class="p">.</span><span class="n">namelist</span><span class="p">()))</span>
+    <span class="n">kag</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="n">z</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'multipleChoiceResponses.csv'</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">kag_questions</span> <span class="o">=</span> <span class="n">kag</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">survey</span> <span class="o">=</span> <span class="n">kag</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</code></pre></div></div>
+<p>read_csv 함수는 ZIP 파일 내부의 파일을 지정할 수 있는 기능이 없다.<br>
+대신 파이썬 표준 라이브러리에 있는 zipfile 모듈을 사용해야 한다. <br>
+zipfile 모듈은 URL과는 작동하지 않는다. 따라서 ZIP 파일이 URL에 있으면 먼저 다운로드해야 한다.</p>
+
+<h2 id="데이터베이스와-작업">
+<a class="anchor" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%99%80-%EC%9E%91%EC%97%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>데이터베이스와 작업</h2>
 
 
   </div><a class="u-url" href="/dailyblog/markdown/database/dbms/mysql/datatype/2021/11/05/post020.html" hidden></a>
